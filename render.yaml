@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: safe-ai-mailroom
+    runtime: docker
+    rootDir: ga3
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    region: singapore
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: mailroom-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: MAILROOM_DB_PATH
+        value: /var/data/mailroom_agent.db
+      - key: MAILROOM_RECEIPT_HMAC_KEY
+        generateValue: true
+      - key: OPENAI_API_KEY
+        sync: false
